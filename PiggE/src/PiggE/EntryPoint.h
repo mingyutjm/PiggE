@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef PE_PLATFORM_WINDOWS
+#ifdef PIG_PLATFORM_WINDOWS
 
 extern PiggE::Application* PiggE::CreateApplication();
 
@@ -12,5 +12,5 @@ int main(int argc, char** argv)
     delete app;
 }
 
-#endif // PE_PLATFORM_WINDOWS
+#endif // PIG_PLATFORM_WINDOWS
 

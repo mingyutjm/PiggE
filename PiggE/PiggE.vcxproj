@@ -55,8 +55,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>PE_PLATFORM_WINDOWS; PE_BUILD_DLL;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PIG_PLATFORM_WINDOWS; PIG_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -69,8 +70,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>PE_PLATFORM_WINDOWS; PE_BUILD_DLL;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PIG_PLATFORM_WINDOWS; PIG_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
