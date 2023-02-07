@@ -10,6 +10,7 @@ namespace PiggE {
         virtual ~Application();
 
         void Run();
+
     };
 
     // To be define in CLIENT
