@@ -2,9 +2,9 @@
 
 // For use by PiggE applications
 
-#include <stdio.h>
 #include "PiggE/Application.h"
 #include "PiggE/Log.h"
+#include "PiggE/Layer.h"
 
 // ------- Entry Point ----------------------
 #include "PiggE/EntryPoint.h"

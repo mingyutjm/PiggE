@@ -1,3 +1,6 @@
 [submodule "PiggE/vendor/spdlog"]
 	path = PiggE/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "PiggE/vendor/glfw"]
+	path = PiggE/vendor/glfw
+	url = https://github.com/mingyutjm/glfw.git

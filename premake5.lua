@@ -10,6 +10,11 @@ workspace "PiggE"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "PiggE/vendor/GLFW/include"
+
+include "PiggE/vendor/GLFW"
+
 project "PiggE"
     location "PiggE"
     kind "SharedLib"
@@ -17,6 +22,10 @@ project "PiggE"
 
     targetdir  ("bin/" .. outputdir .. "/%{prj.name}")
     objdir  ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    pchheader "pigpch.h"
+    pchsource "PiggE/src/pigpch.cpp"
+
     files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.hpp",
@@ -24,7 +33,14 @@ project "PiggE"
     }
 
     includedirs {
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{prj.name}/src",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
@@ -41,14 +57,17 @@ project "PiggE"
 
     filter "configurations:Debug"
         defines "PIG_DEBUG"
+        -- buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "PIG_RELEASE"
+        -- buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Dist"
         defines "PIG_DIST"
+        -- buildoptions "/MD"
         optimize "On"
 
 
@@ -83,12 +102,15 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "PIG_DEBUG"
+        -- buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "PIG_RELEASE"
+        -- buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Dist"
         defines "PIG_DIST"
+        -- buildoptions "/MD"
         optimize "On"
