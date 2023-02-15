@@ -5,6 +5,9 @@
 #include "PiggE/Events/KeyEvent.h"
 #include "PiggE/Events/MouseEvent.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace PiggE {
 
     static bool s_GLFWInitialized = false;
@@ -71,6 +74,11 @@ namespace PiggE {
 
         m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+
+        // Init Glad
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        PIG_CORE_ASSERT(status, "Fail to initialize Glad!");
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -96,25 +104,31 @@ namespace PiggE {
             {
             case GLFW_PRESS:
             {
-                KeyPressedEvent event(key, 0);
+                KeyPressedEvent event(key, scancode, mods);
                 data.EventCallback(event);
                 break;
             }
             case GLFW_RELEASE:
             {
-                KeyReleasedEvent event(key);
+                KeyReleasedEvent event(key, scancode, mods);
                 data.EventCallback(event);
                 break;
             }
             case GLFW_REPEAT:
             {
-                KeyPressedEvent event(key, 1);
+                KeyPressedEvent event(key, scancode, mods, 1);
                 data.EventCallback(event);
                 break;
             }
             default:
                 break;
             }
+        });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int codepoint) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            KeyTypedEvent event(codepoint);
+            data.EventCallback(event);
         });
 
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {

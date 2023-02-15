@@ -6,7 +6,12 @@
 //#include "Window.h"
 //#include "PiggE/Events/ApplicationEvent.h"
 
+
 namespace PiggE {
+    class Layer;
+    class Window;
+    class WindowCloseEvent;
+
     class PIGGE_API Application
     {
     public:
@@ -17,14 +22,19 @@ namespace PiggE {
 
         void OnEvent(Event& e);
 
-        void PushLayer(class Layer* layer);
-        void PushOverlay(class Layer* layer);
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* layer);
+
+        inline static Application& Get() { return *s_Instance; }
+        inline Window& GetWindow() { return *m_Window; }
     private:
-        bool OnWindowClose(class WindowCloseEvent& e);
+        bool OnWindowClose(WindowCloseEvent& e);
     private:
-        std::unique_ptr<class Window> m_Window;
+        std::unique_ptr<Window> m_Window;
         bool m_Running = true;
         LayerStack m_LayerStack;
+
+        static Application* s_Instance;
     };
 
     // To be define in CLIENT

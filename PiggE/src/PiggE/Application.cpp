@@ -1,20 +1,24 @@
 #include "pigpch.h"
 
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "Application.h"
 #include "Window.h"
 #include "PiggE/Log.h"
 #include "PiggE/Events/ApplicationEvent.h"
 #include "Layer.h"
+#include "Input.h"
 
 namespace PiggE {
 
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+    Application* Application::s_Instance = nullptr;
 
     Application::Application()
     {
+        PIG_CORE_ASSERT(!s_Instance, "Application already exists!");
+        s_Instance = this;
         m_Window = std::unique_ptr<Window>(Window::Create());
-        m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+        m_Window->SetEventCallback(PIG_BIND_EVENT_FN(Application::OnEvent));
     }
 
     Application::~Application()
@@ -25,7 +29,7 @@ namespace PiggE {
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(PIG_BIND_EVENT_FN(Application::OnWindowClose));
         PIG_CORE_INFO("{0}", e);
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )

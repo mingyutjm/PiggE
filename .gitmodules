@@ -4,3 +4,6 @@
 [submodule "PiggE/vendor/glfw"]
 	path = PiggE/vendor/glfw
 	url = https://github.com/mingyutjm/glfw.git
+[submodule "PiggE/vendor/imgui"]
+	path = PiggE/vendor/imgui
+	url = https://github.com/mingyutjm/imgui.git
